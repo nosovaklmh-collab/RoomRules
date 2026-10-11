@@ -26,9 +26,17 @@ public class GameManager : MonoBehaviour
         gameOverText.text = "Game Over\nScore: " + score + "\nBest: " + best + "\nTap to restart";
         gameOverText.gameObject.SetActive(true);
     }
+    public Transform player;
+    public Camera mainCamera;
+    public float fallDistance = 6f;
 
     void Update()
     {
+        if (!isGameOver && player.position.y < mainCamera.transform.position.y - fallDistance)
+        {
+            GameOver();
+        }
+
         if (isGameOver && Input.GetMouseButtonDown(0))
         {
             Time.timeScale = 1f;
