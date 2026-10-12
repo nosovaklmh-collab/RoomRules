@@ -6,7 +6,10 @@ public class PlayerController2D : MonoBehaviour
     public float jumpForce = 7f;
     public LayerMask groundLayer;
     public Transform groundCheck;
+   
     public float groundCheckRadius = 0.2f;
+    public Animator animator;
+
 
     private Rigidbody2D rb;
     private bool isGrounded;
@@ -17,15 +20,19 @@ public class PlayerController2D : MonoBehaviour
     }
 
     void Update()
+
     {
+        
         float move = Input.GetAxisRaw("Horizontal");
         rb.linearVelocity = new Vector2(move * moveSpeed, rb.linearVelocity.y);
 
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
-
+        
         if (isGrounded && Input.GetKeyDown(KeyCode.Space))
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
         }
+        animator.SetBool("IsJumping", !isGrounded);
+        
     }
 }
